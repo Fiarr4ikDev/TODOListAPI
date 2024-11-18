@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.fiarr4ikdev.todolistapi.entity.Task;
 import ru.fiarr4ikdev.todolistapi.repo.TaskRepository;
 
+import java.util.Optional;
+
 @Service
 public class TaskService {
 
@@ -17,8 +19,13 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public void deleteTask(Task task) {
-        taskRepository.delete(task);
+    public void deleteTaskById(int id) {
+        Optional<Task> task = taskRepository.findById(id);
+        if (task.isPresent()) {
+            taskRepository.delete(task.get());
+        } else {
+            throw new RuntimeException("Задача не найдена с id " + id);
+        }
     }
 
 }

@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +32,8 @@ public class TaskController {
     }
 
     @PutMapping(
-            value = "/create")
+            value = "/create"
+    )
     @Operation(
             summary = "Создать задачу",
             description = "Возвращает 200 если задача создана"
@@ -53,26 +55,29 @@ public class TaskController {
     }
 
     @DeleteMapping(
-            value = "/delete")
+            value = "/delete/{id}"
+    )
     @Operation(
-            summary = "Удалить задачу",
+            summary = "Удалить задачу по id",
             description = "Возвращает 200 если задача удалена"
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Задача удалена",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(
-                                    implementation = Task.class
-                            )
-                    )
+                    description = "Задача удалена"
             ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "id задачи не найден"
+            )
     })
-    public ResponseEntity<HttpStatus> deleteTask(@RequestBody Task task) {
-        taskService.deleteTask(task);
-        return ResponseEntity.ok(HttpStatus.OK);
+    public ResponseEntity<Void> deleteTask(@PathVariable int id) {
+        try {
+            taskService.deleteTaskById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
