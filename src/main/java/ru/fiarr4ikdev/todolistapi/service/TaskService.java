@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.fiarr4ikdev.todolistapi.entity.Task;
 import ru.fiarr4ikdev.todolistapi.repo.TaskRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +27,10 @@ public class TaskService {
         } else {
             throw new RuntimeException("Задача не найдена с id " + id);
         }
+    }
+
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
     }
 
 }
