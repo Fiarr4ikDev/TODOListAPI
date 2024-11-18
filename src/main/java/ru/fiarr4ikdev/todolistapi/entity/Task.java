@@ -1,5 +1,6 @@
 package ru.fiarr4ikdev.todolistapi.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +14,9 @@ import lombok.Data;
 @Table(
         name = "tasks"
 )
+@Schema(
+        description = "Сущность задача"
+)
 public class Task {
 
     @Id @GeneratedValue(
@@ -21,20 +25,32 @@ public class Task {
     @Column(
             name = "task_id"
     )
+    @Schema(
+            description = "Id задачи с генерацией IDENTITY"
+    )
     private int id;
 
     @Column(
             name = "task_title"
+    )
+    @Schema(
+            description = "Заголовок задачи"
     )
     private String title;
 
     @Column(
             name = "task_description"
     )
+    @Schema(
+            description = "Описание задачи"
+    )
     private String description;
 
     @Column(
             name = "task_priority"
+    )
+    @Schema(
+            description = "Приоритет задачи"
     )
     private int priority;
 
