@@ -20,7 +20,7 @@ public class TaskService {
     }
 
     public void deleteTaskById(int id) {
-        Optional<Task> task = taskRepository.findById(id);
+        Optional<Task> task = taskRepository.findTaskById(id);
         if (task.isPresent()) {
             taskRepository.delete(task.get());
         } else {
