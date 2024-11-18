@@ -34,7 +34,8 @@ public class Task {
             name = "task_title"
     )
     @Schema(
-            description = "Заголовок задачи"
+            description = "Заголовок задачи",
+            example = "Написать REST API"
     )
     private String title;
 
@@ -42,7 +43,8 @@ public class Task {
             name = "task_description"
     )
     @Schema(
-            description = "Описание задачи"
+            description = "Описание задачи",
+            example = "(Подробнее о создании REST API)"
     )
     private String description;
 
@@ -50,7 +52,8 @@ public class Task {
             name = "task_priority"
     )
     @Schema(
-            description = "Приоритет задачи"
+            description = "Приоритет задачи",
+            example = "0 - Самый высокий"
     )
     private int priority;
 
