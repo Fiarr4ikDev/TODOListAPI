@@ -91,11 +91,41 @@ public class TaskController {
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Задачи отображены"
+                    description = "Задачи отображены",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    implementation = Task.class
+                            )
+                    )
             ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "id задачи не найден"
+            )
     })
     public ResponseEntity<List<Task>> allTasks() {
         return ResponseEntity.ok(taskService.getAllTasks());
+    }
+
+    @GetMapping("/get/{id}")
+    @Operation(
+            summary = "Показать задачу по id",
+            description = "Возвращает 200 если задача найдена"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Задача отображена"
+            )
+    })
+    public ResponseEntity<Task> getTaskById(@PathVariable int id) {
+        try {
+            taskService.getTaskById(id);
+            return new ResponseEntity<>(taskService.getTaskById(id), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

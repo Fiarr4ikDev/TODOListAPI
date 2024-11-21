@@ -33,4 +33,13 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
+    public Task getTaskById(int id) {
+        Optional<Task> task = taskRepository.findTaskById(id);
+        if (task.isPresent()) {
+            return task.get();
+        } else {
+            throw new RuntimeException("Задача не найдена с id " + id);
+        }
+    }
+
 }
